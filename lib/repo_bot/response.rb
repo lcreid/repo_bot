@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module RepoBot
   class Response
     def initialize(http_response)
