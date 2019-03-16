@@ -1,4 +1,5 @@
 require "repo_bot/version"
+require "faraday"
 
 module RepoBot
   class Error < StandardError; end

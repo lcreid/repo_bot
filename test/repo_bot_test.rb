@@ -5,7 +5,7 @@ class RepoBotTest < Minitest::Test
     refute_nil ::RepoBot::VERSION
   end
 
-  def test_it_does_something_useful
+  def test_query_github
     assert false
   end
 end

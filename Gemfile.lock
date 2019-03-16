@@ -1,0 +1,26 @@
+PATH
+  remote: .
+  specs:
+    repo_bot (0.1.0)
+      faraday
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    minitest (5.11.3)
+    multipart-post (2.0.0)
+    rake (12.3.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 2.0)
+  minitest (~> 5.0)
+  rake
+  repo_bot!
+
+BUNDLED WITH
+   2.0.1
