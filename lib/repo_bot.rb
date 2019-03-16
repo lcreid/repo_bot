@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "repo_bot/version"
+require "repo_bot/response"
 require "faraday"
 
 module RepoBot
@@ -12,7 +13,7 @@ module RepoBot
         conn.adapter Faraday.default_adapter # make requests with Net::HTTP
         conn.basic_auth(RepoBot.git_username, RepoBot.git_password)
       end
-      connection.get
+      RepoBot::Response.new(connection.get)
     end
 
     def git_password
