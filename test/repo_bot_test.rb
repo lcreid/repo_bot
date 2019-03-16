@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class RepoBotTest < Minitest::Test
@@ -6,6 +8,8 @@ class RepoBotTest < Minitest::Test
   end
 
   def test_query_github
-    assert false
+    response = RepoBot.git_repos
+    puts response.body
+    assert_equal 200, response.status
   end
 end
