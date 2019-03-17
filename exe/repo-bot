@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), "..", "lib")
+require "repo_bot"
+require "repo_bot/main"
+
+begin
+  RepoBot::Main.start
+rescue StandardError => e
+  $stderr.puts e.message # rubocop:disable Style/StderrPuts
+  exit false
+end
