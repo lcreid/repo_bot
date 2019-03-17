@@ -5,6 +5,7 @@ require "repo_bot/repo_host"
 require "repo_bot/bitbucket_host"
 require "repo_bot/github_host"
 require "repo_bot/version"
+require "repo_bot/formatter/csv"
 require "faraday"
 
 module RepoBot
