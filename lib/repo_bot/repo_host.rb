@@ -3,9 +3,9 @@
 module RepoBot
   class RepoHost
     def initialize(url, username: nil, password: nil)
-      @url = url
       @username = username
       @password = password
+      @url = url.respond_to?(:call) ? url.call : url
     end
 
     attr_reader :url

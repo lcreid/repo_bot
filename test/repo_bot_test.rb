@@ -9,7 +9,6 @@ class RepoBotTest < Minitest::Test
 
   def test_query_bitbucket
     response = RepoBot.bitbucket_repos
-    puts response.body
     pp response.to_json
     assert_equal 200, response.status
   end
