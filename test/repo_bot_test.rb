@@ -7,11 +7,12 @@ class RepoBotTest < Minitest::Test
     refute_nil ::RepoBot::VERSION
   end
 
-  # def test_query_bitbucket
-  #   response = RepoBot.bitbucket_repos
-  #   pp response.to_json
-  #   assert_equal 200, response.status
-  # end
+  def test_query_bitbucket
+    response = RepoBot.bitbucket_repos
+    puts response.body
+    pp response.to_json
+    assert_equal 200, response.status
+  end
 
   def test_query_github
     response = RepoBot.git_repos

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "repo_bot/repo_host"
+require "repo_bot/bitbucket_host"
 require "repo_bot/github_host"
 require "repo_bot/version"
 require "repo_bot/response"
@@ -11,21 +12,11 @@ module RepoBot
   # Your code goes here...
   class << self
     def bitbucket_repos
-      
+      BitbucketHost.new.repos
     end
 
     def git_repos
-      repos(GithubHost.new)
-    end
-
-    private
-
-    def repos(repo_host)
-      connection = Faraday.new repo_host.url do |conn|
-        conn.adapter Faraday.default_adapter # make requests with Net::HTTP
-        conn.basic_auth(repo_host.username, repo_host.password)
-      end
-      RepoBot::Response.new(connection.get)
+      GithubHost.new.repos
     end
   end
 end

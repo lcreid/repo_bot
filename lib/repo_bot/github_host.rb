@@ -3,22 +3,9 @@
 module RepoBot
   class GithubHost < RepoHost
     def initialize(username: nil, password: nil)
-      super("https://api.github.com/user/repos", username: username, password: password)
-    end
-
-    def password
-      @password ||= prompt_for_input("Enter git password: ")
-    end
-
-    def username
-      @username ||= prompt_for_input("Enter git username: ")
-    end
-
-    private
-
-    def prompt_for_input(prompt)
-      print prompt
-      gets.strip
+      super("https://api.github.com/user/repos",
+        username: username || ENV["GITHUB_USERNAME"],
+        password: password || ENV["GITHUB_PASSWORD"])
     end
   end
 end
