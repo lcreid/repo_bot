@@ -8,4 +8,5 @@
 /tmp/
 
 .vagrant/
-.git-credentials
+credentials.sh
+
