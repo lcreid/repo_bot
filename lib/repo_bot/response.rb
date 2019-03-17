@@ -22,9 +22,5 @@ module RepoBot
     def respond_to_missing?
       true
     end
-
-    def to_json
-      JSON.parse(body).map { |repo| repo.slice("full_name", "private", "fork", "created_at", "pushed_at") }
-    end
   end
 end

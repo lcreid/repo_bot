@@ -11,6 +11,7 @@ module RepoBot
     attr_reader :url
 
     def password
+      # TODO: put class name in here so user knows which repo is being accessed.
       @password ||= prompt_for_input("Enter password: ")
     end
 
@@ -19,10 +20,11 @@ module RepoBot
         conn.adapter Faraday.default_adapter # make requests with Net::HTTP
         conn.basic_auth(username, password)
       end
-      RepoBot::Response.new(connection.get)
+      connection.get
     end
 
     def username
+      # TODO: put class name in here so user knows which repo is being accessed.
       @username ||= prompt_for_input("Enter username: ")
     end
 
