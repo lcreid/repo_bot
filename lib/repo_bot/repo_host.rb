@@ -13,8 +13,8 @@ module RepoBot
       @password ||= prompt_for_input("Enter #{humanize(self.class)} password: ")
     end
 
-    def request(path)
-      connection = Faraday.new @api_url + path do |conn|
+    def request(path, page = nil, limit = nil)
+      connection = Faraday.new construct_url(path, page, limit) do |conn|
         conn.adapter Faraday.default_adapter # make requests with Net::HTTP
         conn.basic_auth(username, password)
       end
@@ -32,6 +32,10 @@ module RepoBot
 
     def humanize(klass)
       klass.to_s.gsub(/RepoBot::(.+)Host/, '\1')
+    end
+
+    def next_character(url_so_far)
+      url_so_far.index("?").nil? ? "?" : "&"
     end
 
     def prompt_for_input(prompt)

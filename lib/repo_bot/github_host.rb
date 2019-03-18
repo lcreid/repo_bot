@@ -8,25 +8,31 @@ module RepoBot
             password: password || ENV["GITHUB_PASSWORD"])
     end
 
-    def organization_repositories
-      user_organizations.flat_map do |org|
-        Response.new(request("/orgs/#{org}/repos")).to_json
-      end
-    end
-
     # Get the user's repositories, and all the repositories of organizations
     # to which the user belongs.
+    # TODO: Use GitHub's Ruby library:
+    # https://developer.github.com/v3/guides/traversing-with-pagination/#consuming-the-information
     def repos
-      organization_repositories + user_repositories
+      repositories = []
+      page = 1
+      limit = 100 # Maximum allowed by GitHub
+      loop do
+        response = Response.new(request("/user/repos", page, limit))
+        break if response.to_json.empty?
+
+        repositories += response.to_json
+        page += 1
+      end
+      repositories
     end
 
-    def user_organizations
-      response = request("/user/orgs")
-      JSON.parse(response.body).map { |org| org["login"] }
-    end
+    private
 
-    def user_repositories
-      Response.new(request("/user/repos")).to_json
+    def construct_url(path, page, limit)
+      url = @api_url + path
+      url += next_character(url) + "page=#{page}" if page
+      url += next_character(url) + "per_page=#{limit}" if limit
+      url
     end
 
     class Response < RepoBot::Response
