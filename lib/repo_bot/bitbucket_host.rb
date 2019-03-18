@@ -12,7 +12,7 @@ module RepoBot
       repositories = []
       url = @api_url + "/repositories/?role=contributor"
       loop do
-        response = Response.new(raw_request(url))
+        response = Response.new(request(url))
         repositories += response.repository_data
         url = to_json["next"]
         break if url.nil?

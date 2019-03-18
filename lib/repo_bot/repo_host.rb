@@ -2,18 +2,16 @@
 
 module RepoBot
   class RepoHost
-    def initialize(url = nil, username: nil, password: nil)
+    def initialize(username: nil, password: nil)
       @username = username
       @password = password
     end
-
-    attr_reader :url
 
     def password
       @password ||= prompt_for_input("Enter #{humanize(self.class)} password: ")
     end
 
-    def raw_request(url)
+    def request(url)
       connection = Faraday.new url do |conn|
         conn.adapter Faraday.default_adapter # make requests with Net::HTTP
         conn.basic_auth(username, password)
@@ -24,10 +22,6 @@ module RepoBot
       response
     end
 
-    def request(path, page = nil, limit = nil)
-      raw_request(construct_url(path, page, limit))
-    end
-
     def username
       @username ||= prompt_for_input("Enter #{humanize(self.class)} username: ")
     end
@@ -36,10 +30,6 @@ module RepoBot
 
     def humanize(klass)
       klass.to_s.gsub(/RepoBot::(.+)Host/, '\1')
-    end
-
-    def next_character(url_so_far)
-      url_so_far.index("?").nil? ? "?" : "&"
     end
 
     def prompt_for_input(prompt)
