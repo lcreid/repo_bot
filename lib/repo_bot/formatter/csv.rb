@@ -8,13 +8,13 @@ module RepoBot
     class CSV
       class << self
         # Format an array of hashes into a CSV file.
-        # @param response [Response] A reponse from a RepoBot query to a RepoHost.
-        # @return [String] The response converted to a CSV-formatted string.
-        def format(response)
-          keys = response.to_json.flat_map(&:keys).uniq
+        # @param repo_list [repo_list] A reponse from a RepoBot query to a RepoHost.
+        # @return [String] The repo_list converted to a CSV-formatted string.
+        def format(repo_list)
+          keys = repo_list.flat_map(&:keys).uniq
           ::CSV.generate do |csv|
             csv << keys
-            response.to_json.each do |item|
+            repo_list.each do |item|
               csv << keys.map { |k| item[k] }
             end
           end

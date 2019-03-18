@@ -9,7 +9,7 @@ module RepoBot
     end
 
     def repos
-      Response.new(super)
+      Response.new(super).to_json
     end
 
     class Response < RepoBot::Response

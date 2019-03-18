@@ -19,7 +19,7 @@ module RepoBot
       http_response.send(symbol, *args)
     end
 
-    def respond_to_missing?
+    def respond_to_missing?(_method_name, _include_private = false)
       true
     end
   end

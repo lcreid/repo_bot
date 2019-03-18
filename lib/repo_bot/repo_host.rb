@@ -21,6 +21,14 @@ module RepoBot
       end
       connection.get
     end
+    
+    def request(path)
+      connection = Faraday.new @api_url + path do |conn|
+        conn.adapter Faraday.default_adapter # make requests with Net::HTTP
+        conn.basic_auth(username, password)
+      end
+      connection.get
+    end
 
     def username
       @username ||= prompt_for_input("Enter #{humanize(self.class)} username: ")
