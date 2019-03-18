@@ -14,7 +14,7 @@ class RepoBotTest < Minitest::Test
   end
 
   def test_query_github
-    response = RepoBot.git_repos
+    response = RepoBot.github_repos
     pp response.to_json
     assert_equal 200, response.status
   end

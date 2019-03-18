@@ -16,7 +16,7 @@ module RepoBot
       BitbucketHost.new.repos
     end
 
-    def git_repos
+    def github_repos
       GithubHost.new.repos
     end
   end
