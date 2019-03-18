@@ -13,8 +13,8 @@ module RepoBot
       @password ||= prompt_for_input("Enter #{humanize(self.class)} password: ")
     end
 
-    def request(path, page = nil, limit = nil)
-      connection = Faraday.new construct_url(path, page, limit) do |conn|
+    def raw_request(url)
+      connection = Faraday.new url do |conn|
         conn.adapter Faraday.default_adapter # make requests with Net::HTTP
         conn.basic_auth(username, password)
       end
@@ -22,6 +22,10 @@ module RepoBot
       raise RepoBot::Error("Request failed (#{response.status})") unless response.status == 200
 
       response
+    end
+
+    def request(path, page = nil, limit = nil)
+      raw_request(construct_url(path, page, limit))
     end
 
     def username

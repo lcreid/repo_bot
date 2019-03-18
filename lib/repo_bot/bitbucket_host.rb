@@ -8,33 +8,25 @@ module RepoBot
             password: password || ENV["BITBUCKET_PASSWORD"])
     end
 
-    # TODO: Should use the next links from the response.
     def repos
       repositories = []
-      page = 1
-      limit = 100 # Maximum allowed by GitHub
+      url = @api_url + "/repositories/?role=contributor"
       loop do
-        response = Response.new(request("/repositories/?role=contributor", page, limit))
-        repositories += response.to_json
-        break if JSON.parse(response.body)["next"].nil?
-
-        page += 1
+        response = Response.new(raw_request(url))
+        repositories += response.repository_data
+        url = to_json["next"]
+        break if url.nil?
       end
       repositories
     end
 
-    private
-
-    def construct_url(path, page, limit)
-      url = @api_url + path
-      url += next_character(url) + "page=#{page}" if page
-      url += next_character(url) + "pagelen=#{limit}" if limit
-      url
-    end
-
     class Response < RepoBot::Response
+      def repository_data
+        to_json["values"].map { |repo| repo.slice("full_name", "is_private", "created_on", "updated_on") }
+      end
+
       def to_json
-        JSON.parse(body)["values"].map { |repo| repo.slice("full_name", "is_private", "created_on", "updated_on") }
+        @to_json ||= JSON.parse(body) if status == 200
       end
     end
   end
