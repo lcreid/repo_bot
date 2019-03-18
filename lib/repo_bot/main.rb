@@ -10,7 +10,7 @@ module RepoBot
       def start
         process_options
 
-        output_file << RepoBot::Formatter::CSV.format(RepoBot.git_repos) +
+        output_file << RepoBot::Formatter::CSV.format(RepoBot.github_repos) +
                        RepoBot::Formatter::CSV.format(RepoBot.bitbucket_repos)
       end
 
