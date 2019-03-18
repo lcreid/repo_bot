@@ -11,8 +11,7 @@ module RepoBot
     attr_reader :url
 
     def password
-      # TODO: put class name in here so user knows which repo is being accessed.
-      @password ||= prompt_for_input("Enter password: ")
+      @password ||= prompt_for_input("Enter #{humanize(self.class)} password: ")
     end
 
     def repos
@@ -24,11 +23,14 @@ module RepoBot
     end
 
     def username
-      # TODO: put class name in here so user knows which repo is being accessed.
-      @username ||= prompt_for_input("Enter username: ")
+      @username ||= prompt_for_input("Enter #{humanize(self.class)} username: ")
     end
 
     private
+
+    def humanize(klass)
+      klass.to_s.gsub(/RepoBot::(.+)Host/, '\1')
+    end
 
     def prompt_for_input(prompt)
       print prompt
