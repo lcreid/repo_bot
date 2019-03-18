@@ -4,9 +4,8 @@ module RepoBot
   class GithubHost < RepoHost
     def initialize(username: nil, password: nil)
       @api_url = "https://api.github.com"
-      super("https://api.github.com/user/repos",
-        username: username || ENV["GITHUB_USERNAME"],
-        password: password || ENV["GITHUB_PASSWORD"])
+      super(username: username || ENV["GITHUB_USERNAME"],
+            password: password || ENV["GITHUB_PASSWORD"])
     end
 
     def organization_repositories

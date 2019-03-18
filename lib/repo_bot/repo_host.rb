@@ -2,10 +2,9 @@
 
 module RepoBot
   class RepoHost
-    def initialize(url, username: nil, password: nil)
+    def initialize(url = nil, username: nil, password: nil)
       @username = username
       @password = password
-      @url = url.respond_to?(:call) ? url.call : url
     end
 
     attr_reader :url
@@ -14,20 +13,15 @@ module RepoBot
       @password ||= prompt_for_input("Enter #{humanize(self.class)} password: ")
     end
 
-    def repos
-      connection = Faraday.new url do |conn|
-        conn.adapter Faraday.default_adapter # make requests with Net::HTTP
-        conn.basic_auth(username, password)
-      end
-      connection.get
-    end
-    
     def request(path)
       connection = Faraday.new @api_url + path do |conn|
         conn.adapter Faraday.default_adapter # make requests with Net::HTTP
         conn.basic_auth(username, password)
       end
-      connection.get
+      response = connection.get
+      raise RepoBot::Error("Request failed (#{response.status})") unless response.status == 200
+
+      response
     end
 
     def username

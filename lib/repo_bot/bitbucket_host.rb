@@ -3,13 +3,13 @@
 module RepoBot
   class BitbucketHost < RepoHost
     def initialize(username: nil, password: nil)
-      super("https://api.bitbucket.org/2.0/repositories/?role=contributor",
-        username: username || ENV["BITBUCKET_USERNAME"],
-        password: password || ENV["BITBUCKET_PASSWORD"])
+      @api_url = "https://api.bitbucket.org/2.0"
+      super(username: username || ENV["BITBUCKET_USERNAME"],
+            password: password || ENV["BITBUCKET_PASSWORD"])
     end
 
     def repos
-      Response.new(super).to_json
+      Response.new(request("/repositories/?role=contributor")).to_json
     end
 
     class Response < RepoBot::Response
