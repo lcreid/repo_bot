@@ -1,12 +1,14 @@
-# RepoBot
+# RepoBot -- List Your Repositories
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/repo_bot`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+`repo-bot` extracts basic information from your repositories and outputs it as a comma-separated values (CSV) file. Currently it checks one GitHub account and on BitBucket account. Hopefully, this will be made more flexible in the near future.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Or install it yourself as:
+
+    $ gem install repo_bot
+
+You could also use some of the code in another application. Add this line to your application's Gemfile:
 
 ```ruby
 gem 'repo_bot'
@@ -16,13 +18,24 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install repo_bot
-
 ## Usage
 
-TODO: Write usage instructions here
+```bash
+usage: exe/repo-bot [options] [directory]
+    -c, --csv      Output information in CSV format. This is the default.
+    -h, --help     Show this help information
+    -o, --output   Write the information to the specified file, instead of STDOUT (the terminal).
+    -v, --version  Print the version of this program.
+```
+
+`repo-bot` will prompt you for your GitHub username and password, and your BitBucket username and password. If the following environment variables are set and exported, `repo-bot` will use the values in the environment variables and will not prompt you.
+
+```bash
+export GITHUB_USERNAME=<username>
+export GITHUB_PASSWORD=<password>
+export BITBUCKET_USERNAME=<username>
+export BITBUCKET_PASSWORD=<password>
+```
 
 ## Development
 
