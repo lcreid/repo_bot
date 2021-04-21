@@ -9,4 +9,4 @@
 
 .vagrant/
 credentials.sh
-
+vendor/
